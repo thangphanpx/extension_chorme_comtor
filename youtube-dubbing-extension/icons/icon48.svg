@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="8" fill="url(#gradient)"/>
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+  </defs>
+  <!-- Globe icon -->
+  <circle cx="24" cy="24" r="15" stroke="white" stroke-width="2.5" fill="none"/>
+  <path d="M9 24h30" stroke="white" stroke-width="2"/>
+  <path d="M24 9c-4 6-4 24 0 30" stroke="white" stroke-width="2"/>
+  <path d="M24 9c4 6 4 24 0 30" stroke="white" stroke-width="2"/>
+  <!-- Sound waves -->
+  <path d="M35 18c2 2 2 8 0 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M38 15c3 3 3 15 0 18" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

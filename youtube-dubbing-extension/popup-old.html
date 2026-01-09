@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube AI Dubbing Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 380px;
+      min-height: 500px;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+    }
+    
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      text-align: center;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .header h1 {
+      font-size: 20px;
+      margin-bottom: 5px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .header p {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .content {
+      padding: 25px;
+    }
+    
+    .section {
+      background: rgba(255, 255, 255, 0.95);
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    
+    .section:hover {
+      transform: translateY(-2px);
+    }
+    
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .section-title .icon {
+      font-size: 18px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    select, input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 13px;
+      background: white;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+    }
+    
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+      max-height: 120px;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .primary-btn {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+    }
+    
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.9);
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+    
+    .secondary-btn:hover {
+      background: #667eea;
+      color: white;
+    }
+    
+    .api-key-input {
+      position: relative;
+    }
+    
+    .toggle-visibility {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .status {
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 12px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .status.show {
+      opacity: 1;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .tip {
+      background: #e8f4fd;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #0c5460;
+      margin-top: 10px;
+      border-left: 4px solid #17a2b8;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 10px;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 8px;
+    }
+    
+    .stat-number {
+      font-size: 18px;
+      font-weight: 600;
+      color: #667eea;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: #666;
+      margin-top: 2px;
+    }
+    
+    .version {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>�🇳 YouTube Dịch Anh-Việt</h1>
+    <p>Dịch video tiếng Anh sang tiếng Việt</p>
+  </div>
+  
+  <div class="content">
+    <!-- Language Settings -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🗣️</span>
+        Cài đặt dịch thuật
+      </div>
+      
+      <div class="form-group">
+        <label>Dịch từ: 🇺🇸 English → 🇻🇳 Tiếng Việt</label>
+        <input type="text" value="Tiếng Anh → Tiếng Việt" readonly style="background: #f5f5f5; color: #666;">
+      </div>
+      
+      <div class="form-group">
+        <label for="voice-type">Loại giọng nói:</label>
+        <select id="voice-type">
+          <option value="female">Nữ</option>
+          <option value="male">Nam</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="audio-quality">Chất lượng audio:</label>
+        <select id="audio-quality">
+          <option value="standard">Chuẩn (Nhanh)</option>
+          <option value="premium">Cao cấp (Chậm hơn)</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- API Keys -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🔑</span>
+        API Keys (Tùy chọn)
+      </div>
+      
+      <div class="form-group">
+        <label for="google-key">Google Translate API Key (tùy chọn):</label>
+        <div class="api-key-input">
+          <input type="password" id="google-key" placeholder="AIza... (để trống sẽ dùng dịch vụ miễn phí)">
+          <button class="toggle-visibility" onclick="toggleKeyVisibility('google-key')">👁️</button>
+        </div>
+      </div>
+      
+      <div class="tip">
+        💡 <strong>Tip:</strong> Để trống API key sẽ sử dụng dịch vụ miễn phí LibreTranslate. Đánh giá cao hơn nếu có Google API key.
+      </div>
+    </div>
+    
+    <!-- Statistics -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">📊</span>
+        Thống kê sử dụng
+      </div>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number" id="total-translations">0</div>
+          <div class="stat-label">Video đã dịch</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="total-duration">0</div>
+          <div class="stat-label">Phút audio</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Advanced Settings -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">⚙️</span>
+        Cài đặt nâng cao
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="auto-start" style="width: auto; margin-right: 8px;">
+          Tự động bắt đầu dịch khi mở video
+        </label>
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="show-subtitles" style="width: auto; margin-right: 8px;">
+          Hiển thị phụ đề đã dịch
+        </label>
+      </div>
+      
+      <div class="form-group">
+        <label for="volume-ratio">Tỷ lệ âm lượng (Video gốc : Lồng tiếng):</label>
+        <select id="volume-ratio">
+          <option value="0.1:0.8">10% : 80%</option>
+          <option value="0.2:0.8">20% : 80%</option>
+          <option value="0.3:0.7">30% : 70%</option>
+          <option value="0.5:0.5">50% : 50%</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button id="save-settings" class="primary-btn">
+        💾 Lưu cài đặt
+      </button>
+      <button id="test-api" class="secondary-btn">
+        🧪 Test API
+      </button>
+    </div>
+    
+    <button id="reset-settings" class="secondary-btn" style="width: 100%; margin-top: 10px;">
+      🔄 Khôi phục mặc định
+    </button>
+    
+    <!-- Status Messages -->
+    <div id="status" class="status"></div>
+    
+    <!-- Version Info -->
+    <div class="version">
+      Version 1.0.0 | Made with ❤️ for YouTube lovers
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
